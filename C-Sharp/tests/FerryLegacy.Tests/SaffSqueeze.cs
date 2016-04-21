@@ -19,7 +19,8 @@ namespace FerryLegacy.Tests
             var ferries = new Ferries();
             var bookings = new Bookings();
             var _ports = new Ports();
-            var _ferryService = new FerryAvailabilityService(_ports, ferries, timeTables, new PortManager(_ports, ferries));
+            var _ferryService = new FerryAvailabilityService(_ports, ferries, timeTables,
+                new PortManager(_ports, ferries));
             var _bookingService = new JourneyBookingService(timeTables, bookings, _ferryService);
             var _timeTableService = new TimeTableService(timeTables, bookings, _ferryService);
 
@@ -41,7 +42,8 @@ namespace FerryLegacy.Tests
             var timeTables = new TimeTables();
             var ferries = new Ferries();
             var portService = new Ports();
-            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables, new PortManager(portService, ferries));
+            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables,
+                new PortManager(portService, ferries));
 
             var ports = portService.All();
             var timetables = timeTables.All();
@@ -79,7 +81,8 @@ namespace FerryLegacy.Tests
             var timeTables = new TimeTables();
             var ferries = new Ferries();
             var portService = new Ports();
-            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables, new PortManager(portService, ferries));
+            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables,
+                new PortManager(portService, ferries));
 
             var ports = portService.All();
             var timetables = timeTables.All();
@@ -88,9 +91,9 @@ namespace FerryLegacy.Tests
             var firstEntry = allEntries.First();
             var origin = ports.Single(x => x.Id == firstEntry.OriginId);
             var ferry = ferryService.NextFerryAvailableFrom(origin.Id, firstEntry.Time);
-            
+
             var theFerryName = ferry == null ? "" : ferry.Name;
-   
+
             Assert.That(theFerryName, Is.EqualTo("Titanic"));
         }
 
@@ -100,7 +103,8 @@ namespace FerryLegacy.Tests
             var timeTables = new TimeTables();
             var ferries = new Ferries();
             var portService = new Ports();
-            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables, new PortManager(portService, ferries));
+            var ferryService = new FerryAvailabilityService(portService, ferries, timeTables,
+                new PortManager(portService, ferries));
 
             var ports = portService.All();
             var timetables = timeTables.All();
@@ -121,88 +125,139 @@ namespace FerryLegacy.Tests
             var portService = new Ports();
             var portManager = new PortManager(portService, ferries);
 
-            var ports = portService.All();
-            var timetables = timeTables.All();
-
-            var allEntries = timetables.SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
-            var firstEntry = allEntries.First();
-            var origin = ports.Single(x => x.Id == firstEntry.OriginId);
-
             var morePorts = portManager.PortModels();
             var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
 
-            foreach (var entry in evenMoreEntries)
+            foreach (var timetable in evenMoreEntries)
             {
-                var ferry = FerryManager.CreateFerryJourney(morePorts, entry);
-                if (ferry != null)
-                {
-
-                    var journeyFerry = ferry.Ferry;
-
-                    var time = FerryModule.TimeReady(entry, ferry.Destination);
-                    ferry.Destination.AddBoat(time, journeyFerry);
-                }
-                if (entry.OriginId == origin.Id)
-                {
-                    if (entry.Time >= firstEntry.Time)
-                    {
-                        if (ferry != null)
-                        {
-                            var result = ferry.Ferry;
-                            Assert.That(result, Is.Not.Null);
-                        }
-                    }
-                }
-            }
-        }
-
-
-        [Test]
-        public void test_six()
-        {
-            var timeTables = new TimeTables();
-            var ferries = new Ferries();
-            var portService = new Ports();
-            var portManager = new PortManager(portService, ferries);
-            
-            var morePorts = portManager.PortModels();
-            var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
-
-            foreach (var entry in evenMoreEntries)
-            {
-                var journey = FerryManager.CreateFerryJourney(morePorts, entry);
+                var journey = FerryManager.CreateFerryJourney(morePorts, timetable);
                 if (journey != null)
                 {
-                    var ferry = journey.Ferry;
+                    if (journey.Ferry == null)
+                        FerryManager.AddFerry(timetable, journey);
+                    var journeyFerry = journey.Ferry;
 
-                    var time = FerryModule.TimeReady(entry, journey.Destination);
-                    journey.Destination.AddBoat(time, ferry);
+                    var time = FerryModule.TimeReady(timetable, journey.Destination);
+                    journey.Destination.AddBoat(time, journeyFerry);
                 }
 
                 Assert.That(journey.Ferry, Is.Not.Null);
             }
-        }
+            //}
 
-        [Test]
-        public void test_seven()
-        {
-            var timeTables = new TimeTables();
-            var ferries = new Ferries();
-            var portService = new Ports();
-            var portManager = new PortManager(portService, ferries);
 
-            var morePorts = portManager.PortModels();
-            var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+            //[Test]
+            //public void test_six()
+            //{
+            //    var timeTables = new TimeTables();
+            //    var ferries = new Ferries();
+            //    var portService = new Ports();
+            //    var portManager = new PortManager(portService, ferries);
 
-            foreach (var entry in evenMoreEntries)
-            {
-                var journey = FerryManager.CreateFerryJourney(morePorts, entry);
-                if (journey != null)
-                {
-                    var ferry = journey.Ferry;
-                    Assert.That(ferry, Is.Not.Null);
-                }
-            }
+            //    var morePorts = portManager.PortModels();
+            //    var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            //    foreach (var entry in evenMoreEntries)
+            //    {
+            //        var journey = FerryManager.CreateFerryJourney(morePorts, entry);
+            //        if (journey != null)
+            //        {
+            //            var ferry = journey.Ferry;
+
+            //            var time = FerryModule.TimeReady(entry, journey.Destination);
+            //            journey.Destination.AddBoat(time, ferry);
+            //        }
+
+            //        Assert.That(journey.Ferry, Is.Not.Null);
+            //    }
+            //}
+
+            //[Test]
+            //public void test_seven()
+            //{
+            //    var timeTables = new TimeTables();
+            //    var ferries = new Ferries();
+            //    var portService = new Ports();
+            //    var portManager = new PortManager(portService, ferries);
+
+            //    var morePorts = portManager.PortModels();
+            //    var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            //    foreach (var entry in evenMoreEntries)
+            //    {
+            //        var journey = FerryManager.CreateFerryJourney(morePorts, entry);
+            //        if (journey != null)
+            //        {
+            //            BoatReady(entry, journey.Destination, journey);
+            //        }
+            //        if (entry.OriginId == portId)
+            //        {
+            //            if (entry.Time >= time)
+            //            {
+            //                if (journey != null)
+            //                {
+            //                    return journey.Ferry;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+
+            //[Test]
+            //public void test_eight()
+            //{
+            //    var timeTables = new TimeTables();
+            //    var ferries = new Ferries();
+            //    var portService = new Ports();
+            //    var portManager = new PortManager(portService, ferries);
+
+            //    var ports = portManager.PortModels();
+            //    var allTheTimeTables = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            //    foreach (var timetable in allTheTimeTables)
+            //    {
+
+            //        FerryJourney journey = new FerryJourney
+            //        {
+            //            Origin = ports.Single(x => x.Id == timetable.OriginId),
+            //            Destination = ports.Single(x => x.Id == timetable.DestinationId)
+            //        };
+
+            //        if (journey != null)
+            //        {
+            //            var ferry = journey.Ferry;
+            //            Assert.That(ferry, Is.Not.Null);
+            //        }
+            //    }
+            //}
+
+            //[Test]
+            //public void test_nine()
+            //{
+            //    var timeTables = new TimeTables();
+            //    var ferries = new Ferries();
+            //    var portService = new Ports();
+            //    var portManager = new PortManager(portService, ferries);
+
+            //    var ports = portManager.PortModels();
+            //    var allTheTimeTables = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            //    foreach (var timetable in allTheTimeTables)
+            //    {
+
+            //        FerryJourney journey = new FerryJourney
+            //        {
+            //            Origin = ports.Single(x => x.Id == timetable.OriginId),
+            //            Destination = ports.Single(x => x.Id == timetable.DestinationId)
+            //        };
+
+            //        if (journey != null)
+            //        {
+            //            var ferry = journey.Ferry;
+            //            Assert.That(ferry, Is.Not.Null);
+            //        }
+            //    }
+            //}
         }
     }
 }
