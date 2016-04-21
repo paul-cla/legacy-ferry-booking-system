@@ -1,0 +1,14 @@
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\FerryLegacy.Tests.dll
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\FerryLegacy.Tests.pdb
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\nunit.framework.dll
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\nunit.framework.xml
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\obj\Debug\FerryLegacy.Tests.csprojResolveAssemblyReference.cache
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\obj\Debug\FerryLegacy.Tests.dll
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\obj\Debug\FerryLegacy.Tests.pdb
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\Data\ferries.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\Data\ports.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\Data\timetable.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\FerryLegacy.exe
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\ServiceStack.Text.dll
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\ServiceStack.Text.xml
+C:\code\legacy-ferry-booking-system\C-Sharp\tests\FerryLegacy.Tests\bin\Debug\FerryLegacy.pdb

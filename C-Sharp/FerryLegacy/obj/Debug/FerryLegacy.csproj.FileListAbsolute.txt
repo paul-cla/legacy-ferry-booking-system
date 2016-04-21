@@ -9,3 +9,14 @@ C:\src\ferrylegacy\FerryLegacy\bin\Debug\ServiceStack.Text.xml
 C:\src\ferrylegacy\FerryLegacy\obj\Debug\FerryLegacy.csprojResolveAssemblyReference.cache
 C:\src\ferrylegacy\FerryLegacy\obj\Debug\FerryLegacy.exe
 C:\src\ferrylegacy\FerryLegacy\obj\Debug\FerryLegacy.pdb
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\FerryLegacy.exe.config
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\obj\Debug\FerryLegacy.exe
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\obj\Debug\FerryLegacy.pdb
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\Data\ferries.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\Data\ports.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\Data\timetable.txt
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\FerryLegacy.exe
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\FerryLegacy.pdb
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\ServiceStack.Text.dll
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\bin\Debug\ServiceStack.Text.xml
+C:\code\legacy-ferry-booking-system\C-Sharp\FerryLegacy\obj\Debug\FerryLegacy.csprojResolveAssemblyReference.cache
