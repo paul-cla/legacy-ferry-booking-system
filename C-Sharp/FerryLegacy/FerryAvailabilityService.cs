@@ -40,9 +40,6 @@ namespace FerryLegacy
                 
                 var destination = journey.Destination;
 
-                if (destination == null)
-                    throw new ArgumentNullException(nameof(destination));
-
                 var arrivalTime = entry.Time.Add(entry.JourneyTime);
                 int result;
                 if (destination.Id == 3)
