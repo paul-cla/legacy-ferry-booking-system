@@ -7,18 +7,11 @@ namespace FerryLegacy
     {
         public static Journey CreateJourney(List<PortModel> ports, TimeTableEntry timetable)
         {
-            if (ports == null)
-                return null;
-
-            if (timetable == null)
-                return null;
-
-            var journey = new Journey
+            return new Journey
             {
                 Origin = ports.Single(x => x.Id == timetable.OriginId),
                 Destination = ports.Single(x => x.Id == timetable.DestinationId)
             };
-            return journey;
         }
 
         public static void AddFerry(TimeTableEntry timetable, Journey journey)

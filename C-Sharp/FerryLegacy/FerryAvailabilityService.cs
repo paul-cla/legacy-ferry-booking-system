@@ -22,19 +22,10 @@ namespace FerryLegacy
             foreach (var entry in allEntries)
             {
                 var ferry = JourneyManager.CreateJourney(ports, entry);
-                if (ferry != null)
+                FerryReady(entry, ferry.Destination, ferry);
+                if (entry.OriginId == portId && entry.Time >= time)
                 {
-                    FerryReady(entry, ferry.Destination, ferry);
-                }
-                if (entry.OriginId == portId)
-                {
-                    if (entry.Time >= time)
-                    {
-                        if (ferry != null)
-                        {
-                            return ferry.Ferry;
-                        }
-                    }
+                    return ferry.Ferry;
                 }
             }
 
