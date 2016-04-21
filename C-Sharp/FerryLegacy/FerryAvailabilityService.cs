@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FerryLegacy
@@ -21,26 +22,29 @@ namespace FerryLegacy
 
             foreach (var entry in allEntries)
             {
-                var ferry = JourneyManager.CreateJourney(ports, entry);
-                FerryReady(entry, ferry.Destination, ferry);
+                var journey = new Journey
+                {
+                    Origin = ports.Single(x => x.Id == entry.OriginId),
+                    Destination = ports.Single(x => x.Id == entry.DestinationId)
+                };
+
+                var destination = journey.Destination;
+                if (journey.Ferry == null)
+                {
+                    journey.Ferry = journey.Origin.GetNextAvailable(entry.Time);
+                }
+
+                var ferry = journey.Ferry;
+
+                var time1 = FerryTimeReadyCalculator.TimeReady(entry, destination);
+                destination.AddFerry(time1, ferry);
                 if (entry.OriginId == portId && entry.Time >= time)
                 {
-                    return ferry.Ferry;
+                    return journey.Ferry;
                 }
             }
 
             return null;
-        }
-
-        private static void FerryReady(TimeTableEntry timetable, PortModel destination, Journey journey)
-        {
-            if (journey.Ferry == null)
-                JourneyManager.AddFerry(timetable, journey);
-
-            var ferry = journey.Ferry;
-
-            var time = FerryTimeReadyCalculator.TimeReady(timetable, destination);
-            destination.AddFerry(time, ferry);
         }
     }
 }

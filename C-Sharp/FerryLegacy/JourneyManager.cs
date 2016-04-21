@@ -5,15 +5,6 @@ namespace FerryLegacy
 {
     public static class JourneyManager
     {
-        public static Journey CreateJourney(List<PortModel> ports, TimeTableEntry timetable)
-        {
-            return new Journey
-            {
-                Origin = ports.Single(x => x.Id == timetable.OriginId),
-                Destination = ports.Single(x => x.Id == timetable.DestinationId)
-            };
-        }
-
         public static void AddFerry(TimeTableEntry timetable, Journey journey)
         {
             journey.Ferry = journey.Origin.GetNextAvailable(timetable.Time);
