@@ -7,17 +7,25 @@ namespace FerryLegacy
     public class FerryAvailabilityService
     {
         private readonly TimeTables _timeTables;
-        private readonly PortManager _portManager;
+        private Ferries _ferries;
+        private Ports _ports;
 
-        public FerryAvailabilityService(TimeTables timeTables, PortManager portManager)
+        public FerryAvailabilityService(TimeTables timeTables, Ports ports, Ferries ferries)
         {
             _timeTables = timeTables;
-            _portManager = portManager;
+            _ports = ports;
+            _ferries = ferries;
         }
 
         public Ferry NextFerryAvailableFrom(int portId, TimeSpan time)
         {
-            var ports = _portManager.PortModels();
+            var ports1 = _ports.All().Select(x => new PortModel(x)).ToList();
+            foreach (var ferry in _ferries.All())
+            {
+                var port = ports1.Single(x => x.Id == ferry.HomePortId);
+                port.AddFerry(new TimeSpan(0, 0, 0), ferry);
+            }
+            var ports = ports1;
             var allEntries = _timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
 
             foreach (var entry in allEntries)
