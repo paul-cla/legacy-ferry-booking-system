@@ -1,6 +1,6 @@
 ﻿namespace FerryLegacy
 {
-    public class FerryJourney
+    public class Journey
     {
         public Ferry Ferry { get; set; }
         public PortModel Origin { get; set; }

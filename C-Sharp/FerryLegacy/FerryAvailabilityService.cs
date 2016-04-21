@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace FerryLegacy
 {
     public class FerryAvailabilityService
     {
-        private readonly Ports _ports;
-        private readonly Ferries _ferries;
         private readonly TimeTables _timeTables;
         private readonly PortManager _portManager;
 
-        public FerryAvailabilityService(Ports ports, Ferries ferries, TimeTables timeTables, PortManager portManager)
+        public FerryAvailabilityService(TimeTables timeTables, PortManager portManager)
         {
-            _ports = ports;
-            _ferries = ferries;
             _timeTables = timeTables;
             _portManager = portManager;
         }
@@ -26,10 +21,10 @@ namespace FerryLegacy
 
             foreach (var entry in allEntries)
             {
-                var ferry = FerryManager.CreateFerryJourney(ports, entry);
+                var ferry = JourneyManager.CreateJourney(ports, entry);
                 if (ferry != null)
                 {
-                    BoatReady(entry, ferry.Destination, ferry);
+                    FerryReady(entry, ferry.Destination, ferry);
                 }
                 if (entry.OriginId == portId)
                 {
@@ -46,15 +41,15 @@ namespace FerryLegacy
             return null;
         }
 
-        private static void BoatReady(TimeTableEntry timetable, PortModel destination, FerryJourney ferryJourney)
+        private static void FerryReady(TimeTableEntry timetable, PortModel destination, Journey journey)
         {
-            if (ferryJourney.Ferry == null)
-                FerryManager.AddFerry(timetable, ferryJourney);
+            if (journey.Ferry == null)
+                JourneyManager.AddFerry(timetable, journey);
 
-            var ferry = ferryJourney.Ferry;
+            var ferry = journey.Ferry;
 
-            var time = FerryModule.TimeReady(timetable, destination);
-            destination.AddBoat(time, ferry);
+            var time = FerryTimeReadyCalculator.TimeReady(timetable, destination);
+            destination.AddFerry(time, ferry);
         }
     }
 }

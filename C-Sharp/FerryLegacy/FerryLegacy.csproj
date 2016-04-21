@@ -50,9 +50,9 @@
     <Compile Include="Ferries.cs" />
     <Compile Include="Ferry.cs" />
     <Compile Include="FerryAvailabilityService.cs" />
-    <Compile Include="FerryJourney.cs" />
-    <Compile Include="FerryManager.cs" />
-    <Compile Include="FerryModule.cs" />
+    <Compile Include="journey.cs" />
+    <Compile Include="JourneyManager.cs" />
+    <Compile Include="FerryTimeReadyCalculator.cs" />
     <Compile Include="JourneyBookingService.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="PortManager.cs" />

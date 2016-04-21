@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace FerryLegacy
 {
-    public static class FerryManager
+    public static class JourneyManager
     {
-        public static FerryJourney CreateFerryJourney(List<PortModel> ports, TimeTableEntry timetable)
+        public static Journey CreateJourney(List<PortModel> ports, TimeTableEntry timetable)
         {
             if (ports == null)
                 return null;
@@ -13,15 +13,15 @@ namespace FerryLegacy
             if (timetable == null)
                 return null;
 
-            var fj = new FerryJourney
+            var journey = new Journey
             {
                 Origin = ports.Single(x => x.Id == timetable.OriginId),
                 Destination = ports.Single(x => x.Id == timetable.DestinationId)
             };
-            return fj;
+            return journey;
         }
 
-        public static void AddFerry(TimeTableEntry timetable, FerryJourney journey)
+        public static void AddFerry(TimeTableEntry timetable, Journey journey)
         {
             journey.Ferry = journey.Origin.GetNextAvailable(timetable.Time);
         }

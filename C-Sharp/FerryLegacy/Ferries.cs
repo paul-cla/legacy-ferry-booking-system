@@ -8,7 +8,7 @@ namespace FerryLegacy
 {
     public class Ferries
     {
-        private readonly List<Ferry> _ferries = new List<Ferry>();
+        private readonly List<Ferry> _ferries;
 
         public Ferries()
         {

@@ -8,7 +8,7 @@ namespace FerryLegacy
 {
     public class TimeTables
     {
-        private readonly List<TimeTableEntry> _entries = new List<TimeTableEntry>();
+        private readonly List<TimeTableEntry> _entries;
 
         public TimeTables()
         {
@@ -46,7 +46,7 @@ namespace FerryLegacy
             return result;
         }
 
-        private void AddOrigin(List<TimeTableEntry> entries, int origin )
+        private static void AddOrigin(List<TimeTableEntry> entries, int origin )
         {
             foreach (var timeTableEntry in entries)
             {

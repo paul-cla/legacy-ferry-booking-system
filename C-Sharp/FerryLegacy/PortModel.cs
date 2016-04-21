@@ -6,35 +6,33 @@ namespace FerryLegacy
 {
     public class PortModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; private set; }
 
-        private readonly Dictionary<int, TimeSpan> _boatAvailability = new Dictionary<int, TimeSpan>();
-        private readonly List<Ferry> _boats = new List<Ferry>();
+        private readonly Dictionary<int, TimeSpan> _ferryAvailability = new Dictionary<int, TimeSpan>();
+        private readonly List<Ferry> _ferries = new List<Ferry>();
 
         public PortModel(Port port)
         {
             Id = port.Id;
-            Name = port.Name;
         }
 
-        public void AddBoat(TimeSpan available, Ferry boat)
+        public void AddFerry(TimeSpan available, Ferry ferry)
         {
-            if (boat != null)
+            if (ferry != null)
             {
-                _boats.Add(boat);
-                _boatAvailability.Add(boat.Id, available);
+                _ferries.Add(ferry);
+                _ferryAvailability.Add(ferry.Id, available);
             }
         }
 
         public Ferry GetNextAvailable(TimeSpan time)
         {
-            var available = _boatAvailability.FirstOrDefault(x => time >= x.Value);
+            var available = _ferryAvailability.FirstOrDefault(x => time >= x.Value);
             if (available.Key == 0) return null;
-            _boatAvailability.Remove(available.Key);
-            var boat = _boats.Single(x => x.Id == available.Key);
-            _boats.Remove(boat);
-            return boat;
+            _ferryAvailability.Remove(available.Key);
+            var ferry = _ferries.Single(x => x.Id == available.Key);
+            _ferries.Remove(ferry);
+            return ferry;
         }
     }
 }
