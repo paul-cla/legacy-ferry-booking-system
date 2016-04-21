@@ -28,16 +28,26 @@ namespace FerryLegacy
                     Destination = ports.Single(x => x.Id == entry.DestinationId)
                 };
 
+                journey.Ferry = journey.Origin.GetNextAvailable(entry.Time);
+                
                 var destination = journey.Destination;
-                if (journey.Ferry == null)
-                {
-                    journey.Ferry = journey.Origin.GetNextAvailable(entry.Time);
-                }
 
-                var ferry = journey.Ferry;
+                if (destination == null)
+                    throw new ArgumentNullException(nameof(destination));
 
-                var time1 = FerryTimeReadyCalculator.TimeReady(entry, destination);
-                destination.AddFerry(time1, ferry);
+                var arrivalTime = entry.Time.Add(entry.JourneyTime);
+                int result;
+                if (destination.Id == 3)
+                    result = 25;
+                else if (destination.Id == 2)
+                    result = 20;
+                else
+                    result = 15;
+                var turnaroundTime = result;
+                var timeReady = arrivalTime.Add(TimeSpan.FromMinutes(turnaroundTime));
+                var time1 = timeReady;
+
+                destination.AddFerry(time1, journey.Ferry);
                 if (entry.OriginId == portId && entry.Time >= time)
                 {
                     return journey.Ferry;
