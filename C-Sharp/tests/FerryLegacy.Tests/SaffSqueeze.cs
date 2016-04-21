@@ -155,5 +155,54 @@ namespace FerryLegacy.Tests
                 }
             }
         }
+
+
+        [Test]
+        public void test_six()
+        {
+            var timeTables = new TimeTables();
+            var ferries = new Ferries();
+            var portService = new Ports();
+            var portManager = new PortManager(portService, ferries);
+            
+            var morePorts = portManager.PortModels();
+            var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            foreach (var entry in evenMoreEntries)
+            {
+                var journey = FerryManager.CreateFerryJourney(morePorts, entry);
+                if (journey != null)
+                {
+                    var ferry = journey.Ferry;
+
+                    var time = FerryModule.TimeReady(entry, journey.Destination);
+                    journey.Destination.AddBoat(time, ferry);
+                }
+
+                Assert.That(journey.Ferry, Is.Not.Null);
+            }
+        }
+
+        [Test]
+        public void test_seven()
+        {
+            var timeTables = new TimeTables();
+            var ferries = new Ferries();
+            var portService = new Ports();
+            var portManager = new PortManager(portService, ferries);
+
+            var morePorts = portManager.PortModels();
+            var evenMoreEntries = timeTables.All().SelectMany(x => x.Entries).OrderBy(x => x.Time).ToList();
+
+            foreach (var entry in evenMoreEntries)
+            {
+                var journey = FerryManager.CreateFerryJourney(morePorts, entry);
+                if (journey != null)
+                {
+                    var ferry = journey.Ferry;
+                    Assert.That(ferry, Is.Not.Null);
+                }
+            }
+        }
     }
 }
