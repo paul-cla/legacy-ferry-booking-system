@@ -367,6 +367,7 @@ namespace FerryLegacy.Tests
                 };
 
                 if (journey.Ferry != null) continue;
+                Assert.That(boatAvailability.Any(x => entry.Time >= x.Value), Is.True);
                 var available = boatAvailability.FirstOrDefault(x => entry.Time >= x.Value);
                 Assert.That(available.Key, Is.Not.EqualTo(0));
             }

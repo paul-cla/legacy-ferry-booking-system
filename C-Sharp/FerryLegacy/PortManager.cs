@@ -21,7 +21,7 @@ namespace FerryLegacy
             foreach (var ferry in _ferries.All())
             {
                 var port = ports.Single(x => x.Id == ferry.HomePortId);
-                port.AddBoat(new TimeSpan(0, 0, 10), ferry);
+                port.AddBoat(new TimeSpan(0, 0, 0), ferry);
             }
             return ports;
         }

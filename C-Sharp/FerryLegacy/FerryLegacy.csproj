@@ -71,7 +71,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Expected Time Table.txt" />
+    <Content Include="Data\Expected.Time.Table.txt" />
     <Content Include="Data\ferries.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
