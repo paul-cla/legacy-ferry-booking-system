@@ -30,6 +30,7 @@ namespace FerryLegacy
 
             foreach (var entry in allEntries)
             {
+
                 var journey = new Journey
                 {
                     Origin = ports.Single(x => x.Id == entry.OriginId),
@@ -41,18 +42,23 @@ namespace FerryLegacy
                 var destination = journey.Destination;
 
                 var arrivalTime = entry.Time.Add(entry.JourneyTime);
-                int result;
-                if (destination.Id == 3)
-                    result = 25;
-                else if (destination.Id == 2)
-                    result = 20;
-                else
-                    result = 15;
-                var turnaroundTime = result;
-                var timeReady = arrivalTime.Add(TimeSpan.FromMinutes(turnaroundTime));
-                var time1 = timeReady;
+                int turnaroundTime;
 
-                destination.AddFerry(time1, journey.Ferry);
+                switch (destination.Id)
+                {
+                    case 3:
+                        turnaroundTime = 25;
+                        break;
+                    case 2:
+                        turnaroundTime = 20;
+                        break;
+                    default:
+                        turnaroundTime = 15;
+                        break;
+                }
+                var timeReady = arrivalTime.Add(TimeSpan.FromMinutes(turnaroundTime));
+
+                destination.AddFerry(timeReady, journey.Ferry);
                 if (entry.OriginId == portId && entry.Time >= time)
                 {
                     return journey.Ferry;
